@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aqueiroz <aqueiroz@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/15 19:40:35 by aqueiroz          #+#    #+#             */
-/*   Updated: 2022/11/18 03:48:01 by aqueiroz         ###   ########.fr       */
+/*   Created: 2022/11/18 03:44:25 by aqueiroz          #+#    #+#             */
+/*   Updated: 2022/11/18 03:47:46 by aqueiroz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
-int main()
-{
-	ft_putchar_fd('c', 1);
-	return (0);
-}
+#ifndef FDF_H
+# define FDF_H
+# include "../libs/printf/includes/ft_printf.h"
+# include "../libs/libft/libft.h"
+# include "../libs/mlx/mlx.h"
+# include <X11/X.h>
+# include <X11/keysym.h>
+
+#endif
