@@ -6,7 +6,7 @@
 #    By: aqueiroz <aqueiroz@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 19:39:40 by aqueiroz          #+#    #+#              #
-#    Updated: 2022/11/18 03:50:00 by aqueiroz         ###   ########.fr        #
+#    Updated: 2022/12/19 21:13:49 by aqueiroz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,73 +36,78 @@ color-test:
 
 NAME=fdf
 
-SRC_PATH=./srcs/
-LIB_PATH=./libs/
-OBJ_PATH=./objs/
-PATH_INC=./includes/
-LIBFT_PATH=./libs/libft
-FT_PRINTF_PATH=./libs/ft_printf
-MLX_PATH=./libs/mlx-linux
-LIBS_PATH	=	-L$(LIBFT_PATH) -L$(MLX_PATH) -L$(FT_PRINTF_PATH)
+SRC_PATH = srcs
+LIB_PATH = libs
+OBJ_PATH = objs
+PATH_INC = includes
+LIBFT_PATH = $(LIB_PATH)/libft
+FT_PRINTF_PATH = $(LIB_PATH)/printf
+MLX_PATH = $(LIB_PATH)/mlx-linux
+LIBFT = $(LIBFT_PATH)/libft.a
+FT_PRINTF = $(FT_PRINTF_PATH)/libftprintf.a
+MLX = $(MLX_PATH)/libmlx.a
 
 FILES= main render_map
-SRCS = $(addprefix $(PATH_SRC), $(addsuffix .c, $(FILES)))
+
+SRCS = $(addprefix $(PATH_SRC)/, $(addsuffix .c, $(FILES)))
 OBJS = $(addsuffix .o, $(FILES))
 
 # FLAGS
 
-CC=cc
-INCLUDES=-I $(PATH_INC) -I $(LIBFT_PATH)/includes -I $(FT_PRINTF_PATH) -I $(MLX_PATH)
-CFLAGS=-Wall -Werror -Wextra $(INCLUDES)
-LIBS=-lX11 -lXext -Imlx -lXext
+CC = clang
+CFLAGS = 
+LIBFLAGS = -L./$(LIBFT_PATH) -L./$(FT_PRINTF_PATH) -L./$(MLX_PATH) -lft -lXext -lX11 -lmlx -lm
 CFLAGS_MLX=-I /usr/include 
 
-all: mlx libft printf $(NAME)
+all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(addprefix ./objs/, $(OBJS)) -o $(NAME) $(LIBS_PATH) $(LIBS)
+$(NAME): $(LIBFT) $(FT_PRINTF) $(MLX) $(OBJ_PATH) $(OBJS)
+	@$(CC) $(addprefix $(OBJ_PATH)/,$(OBJS)) $(LIBFLAGS) -o $@
 	$(info $(purple)All installed. Run './fdf' with a map as argument.$(reset))
 
-%.o: srcs/%.c
-	@mkdir -p objs 
-	$(CC) $(CFLAGS) $(LIBS_PATH) $(LIBS) $< -o $(OBJ_PATH)$@
-mlx:
+$(OBJ_PATH):
+	@mkdir -p $(OBJ_PATH)
+
+%.o: $(SRC_PATH)/%.c
+	@$(CC) $(CFLAGS) -c -I $(PATH_INC) -o $(OBJ_PATH)/$@ $<
+	
+$(MLX):
 	$(info $(yellow)WAIT: Gathering all necessary files.$(reset))
 ifeq ($(shell mkdir -p libs && cd libs && ls | grep mlx), mlx)
 	$(info $(green)Minilibx founded!$(reset))
 else
 	$(info $(blue)Cloning minilibx to libs folder.$(reset))
-	@git clone --quiet https://github.com/42Paris/minilibx-linux.git $(LIB_PATH)mlx
+	@git clone --quiet https://github.com/42Paris/minilibx-linux.git $(MLX_PATH)
 	$(info $(blue)Compiling minilibx.$(reset))
-	@$(MAKE) -s -k -C $(LIB_PATH)mlx CFLAG=$(CFLAGS_MLX)
+	$(MAKE) -s -k -C $(MLX_PATH)
 	$(info $(green)Minilibx installed!$(reset))
 endif
 
-libft:
+$(LIBFT):
 ifeq ($(shell mkdir -p libs && cd libs && ls | grep libft), libft)
 	$(info $(green)Libft founded!$(reset))
 else
 	$(info $(blue)Cloning Libft to libs folder.$(reset))
-	@git clone --quiet git@github.com:alineagq/Libft.git $(LIB_PATH)libft
+	@git clone --quiet git@github.com:alineagq/Libft.git $(LIBFT_PATH)
 	$(info $(blue)Compiling libft.$(reset))
-	@$(MAKE) -s -k -C $(LIB_PATH)libft
+	@$(MAKE) -s -k -C $(LIBFT_PATH)
 	$(info $(green)Libft installed!$(reset))
 endif
 
-printf:
+$(FT_PRINTF):
 ifeq ($(shell mkdir -p libs && cd libs && ls | grep printf), printf)
 	$(info $(green)Printf founded!$(reset))
 else
 	$(info $(blue)Cloning Printf to libs folder.$(reset))
-	@git clone --quiet git@github.com:alineagq/ft_printf.git $(LIB_PATH)printf
+	@git clone --quiet git@github.com:alineagq/ft_printf.git $(FT_PRINTF_PATH)
 	$(info $(blue)Compiling printf.$(reset))
-	@$(MAKE) -s -k -C $(LIB_PATH)printf
+	@$(MAKE) -s -k -C $(FT_PRINTF_PATH)
 	$(info $(green)Printf installed!$(reset))
 endif
 	$(info $(yellow)Compiling fdf.$(reset))
 
 clean:
-	@rm -dfr ./libs/ ./objs
+	@rm -dfr ./objs ./libs
 	$(info $(yellow)All libs files were removed.$(reset))
 
 fclean: clean
