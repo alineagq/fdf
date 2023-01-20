@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aqueiroz <aqueiroz@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: aqueiroz <aqueiroz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/01/08 02:56:50 by aqueiroz          #+#    #+#              #
-#    Updated: 2023/01/09 21:40:22 by aqueiroz         ###   ########.fr        #
+#    Created: 2022/11/15 19:39:40 by aqueiroz          #+#    #+#              #
+#    Updated: 2023/01/19 21:28:15 by aqueiroz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,11 +41,11 @@ LIB_PATH = libs
 OBJ_PATH = objs
 PATH_INC = includes
 LIBFT_PATH = $(LIB_PATH)/libft
-FT_PRINTF_PATH = $(LIB_PATH)/ft_printf
+FT_PRINTF_PATH = $(LIB_PATH)/printf
 LIBFT = $(LIBFT_PATH)/libft.a
 FT_PRINTF = $(FT_PRINTF_PATH)/libftprintf.a
 
-FILES= main validators generate_matrix
+FILES= main generate_matrix validators
 
 SRCS = $(addprefix $(PATH_SRC)/, $(addsuffix .c, $(FILES)))
 OBJS = $(addsuffix .o, $(FILES))
@@ -53,8 +53,9 @@ OBJS = $(addsuffix .o, $(FILES))
 # FLAGS
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = 
 LIBFLAGS = -L./$(LIBFT_PATH) -L./$(FT_PRINTF_PATH) -lft -lftprintf -lXext -lX11 -lmlx -lm
+CFLAGS_MLX=-I /usr/include 
 
 all: $(NAME)
 
@@ -67,20 +68,22 @@ $(OBJ_PATH):
 
 %.o: $(SRC_PATH)/%.c
 	@$(CC) $(CFLAGS) -c -I $(PATH_INC) -o $(OBJ_PATH)/$@ $<
-
+	
 $(LIBFT):
-ifeq ($(shell cd libs/libft && ls | grep libft.a), libft.a)
-	$(info $(green)Libft already compliled!$(reset))
+ifeq ($(shell mkdir -p libs && cd libs && ls | grep libft), libft)
+	$(info $(green)Libft founded!$(reset))
 else
+	$(info $(blue)Cloning Libft to libs folder.$(reset))
 	$(info $(blue)Compiling libft.$(reset))
 	@$(MAKE) -s -k -C $(LIBFT_PATH)
 	$(info $(green)Libft installed!$(reset))
 endif
 
 $(FT_PRINTF):
-ifeq ($(shell cd libs/ft_printf && ls | grep libftprintf.a), libftprintf.a)
+ifeq ($(shell mkdir -p libs && cd libs && ls | grep printf), printf)
 	$(info $(green)Printf founded!$(reset))
 else
+	$(info $(blue)Cloning Printf to libs folder.$(reset))
 	$(info $(blue)Compiling printf.$(reset))
 	@$(MAKE) -s -k -C $(FT_PRINTF_PATH)
 	$(info $(green)Printf installed!$(reset))
@@ -89,14 +92,14 @@ endif
 
 clean:
 	@rm -dfr ./objs
-	@$(MAKE) clean -s -k -C $(LIBFT_PATH)
-	@$(MAKE) clean -s -k -C $(FT_PRINTF_PATH)
+	@$(MAKE) -C $(FT_PRINTF_PATH) --silent clean
+	@$(MAKE) -C $(LIBFT_PATH) --silent clean
 	$(info $(yellow)All libs files were removed.$(reset))
 
 fclean: clean
 	@rm -f $(NAME)
-	@$(MAKE) fclean -s -k -C $(LIBFT_PATH)
-	@$(MAKE) fclean -s -k -C $(FT_PRINTF_PATH)
+	@$(MAKE) -C $(FT_PRINTF_PATH) --silent clean
+	@$(MAKE) -C $(LIBFT_PATH) --silent clean
 	$(info $(yellow)Fdf file was removed.$(reset))
 
 re: fclean all
