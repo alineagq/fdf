@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validators.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aqueiroz <aqueiroz@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: aqueiroz <aqueiroz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 05:15:34 by aqueiroz          #+#    #+#             */
-/*   Updated: 2023/01/08 05:34:39 by aqueiroz         ###   ########.fr       */
+/*   Updated: 2023/01/23 20:56:40 by aqueiroz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	validate_input(int argc, char *argv[])
 			ft_printf("Too many arguments.\n");
 		else
 			ft_printf("Missing map file.\n");
-		return (0);
+		exit(0);
 	}
 	else
 	{
 		if (read(*argv[1], 0, 0))
 			return (1);
 		else
-			return (0);
+			exit(0);
 	}
 }
