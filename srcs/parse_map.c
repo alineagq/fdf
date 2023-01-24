@@ -1,13 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   generate_matrix.c                                  :+:      :+:    :+:   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aqueiroz <aqueiroz@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: aqueiroz <aqueiroz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/09 21:42:43 by aqueiroz          #+#    #+#             */
-/*   Updated: 2023/01/09 21:45:04 by aqueiroz         ###   ########.fr       */
+/*   Created: 2023/01/23 21:05:10 by aqueiroz          #+#    #+#             */
+/*   Updated: 2023/01/23 21:08:13 by aqueiroz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include "fdf.h"
+
+int	parsing_map(int fd)
+{
+	ft_printf("This is a test!");
+	close(fd);
+	return (0);
+}

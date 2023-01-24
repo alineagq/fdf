@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aqueiroz <aqueiroz@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: aqueiroz <aqueiroz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 19:40:35 by aqueiroz          #+#    #+#             */
-/*   Updated: 2023/01/09 21:56:30 by aqueiroz         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:19:04 by aqueiroz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,9 @@
 int	main(int argc, char *argv[])
 {
 	char	*str;
-	int		fd;
-	int		vertical_len;
 
-	vertical_len = 0;
-	if (validate_input(argc, argv))
-	{
-		fd = open(argv[1], O_RDONLY);
-		while (get_next_line(fd))
-			vertical_len++;
-		close(fd);
-		ft_printf("%d", vertical_len);
-	}
+	validate_input(argc, argv[1]);
+	parsing_map(open(argv[1], O_RDONLY));
+
 	return (0);
 }

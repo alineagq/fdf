@@ -6,7 +6,7 @@
 #    By: aqueiroz <aqueiroz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 19:39:40 by aqueiroz          #+#    #+#              #
-#    Updated: 2023/01/19 21:28:15 by aqueiroz         ###   ########.fr        #
+#    Updated: 2023/01/23 21:05:23 by aqueiroz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ FT_PRINTF_PATH = $(LIB_PATH)/printf
 LIBFT = $(LIBFT_PATH)/libft.a
 FT_PRINTF = $(FT_PRINTF_PATH)/libftprintf.a
 
-FILES= main generate_matrix validators
+FILES= main parse_map validators
 
 SRCS = $(addprefix $(PATH_SRC)/, $(addsuffix .c, $(FILES)))
 OBJS = $(addsuffix .o, $(FILES))
