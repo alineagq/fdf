@@ -1,0 +1,6 @@
+[submodule "libs/libft"]
+	path = libs/libft
+	url = git@github.com:alineagq/Libft.git
+[submodule "libs/printf"]
+	path = libs/printf
+	url = git@github.com:alineagq/ft_printf.git
