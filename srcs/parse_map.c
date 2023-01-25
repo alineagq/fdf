@@ -35,12 +35,18 @@ int	count_map_lines(char *file)
 {
 	size_t	len;
 	int		fd;
+	char	*str;
 
 	len = 0;
 	fd = open(file, O_RDONLY);
-	while (get_next_line(fd))
+	str = get_next_line(fd);
+	while (str)
+	{
 		len++;
-	free(get_next_line(fd));
+		if (str)
+			free(str);
+		str = get_next_line(fd);
+	}
 	return (len);
 	close(fd);
 }
