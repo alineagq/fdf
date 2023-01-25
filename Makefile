@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aqueiroz <aqueiroz@student.42.fr>          +#+  +:+       +#+         #
+#    By: aqueiroz < aqueiroz@student.42sp.org.br    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 19:39:40 by aqueiroz          #+#    #+#              #
-#    Updated: 2023/01/23 21:05:23 by aqueiroz         ###   ########.fr        #
+#    Updated: 2023/01/25 11:37:27 by aqueiroz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,22 +45,21 @@ FT_PRINTF_PATH = $(LIB_PATH)/printf
 LIBFT = $(LIBFT_PATH)/libft.a
 FT_PRINTF = $(FT_PRINTF_PATH)/libftprintf.a
 
-FILES= main parse_map validators
+FILES= main parse_map validators utils
 
 SRCS = $(addprefix $(PATH_SRC)/, $(addsuffix .c, $(FILES)))
 OBJS = $(addsuffix .o, $(FILES))
 
 # FLAGS
 
-CC = clang
+CC = cc
 CFLAGS = 
 LIBFLAGS = -L./$(LIBFT_PATH) -L./$(FT_PRINTF_PATH) -lft -lftprintf -lXext -lX11 -lmlx -lm
-CFLAGS_MLX=-I /usr/include 
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(FT_PRINTF) $(OBJ_PATH) $(OBJS)
-	@$(CC) $(addprefix $(OBJ_PATH)/,$(OBJS)) $(LIBFLAGS) -o $@
+	@$(CC) -g3 $(addprefix $(OBJ_PATH)/,$(OBJS)) $(LIBFLAGS) -o $@
 	$(info $(purple)All installed. Run './fdf' with a map as argument.$(reset))
 
 $(OBJ_PATH):
@@ -71,9 +70,6 @@ $(OBJ_PATH):
 	
 $(LIBFT):
 ifeq ($(shell mkdir -p libs && cd libs && ls | grep libft), libft)
-	$(info $(green)Libft founded!$(reset))
-else
-	$(info $(blue)Cloning Libft to libs folder.$(reset))
 	$(info $(blue)Compiling libft.$(reset))
 	@$(MAKE) -s -k -C $(LIBFT_PATH)
 	$(info $(green)Libft installed!$(reset))
@@ -81,15 +77,14 @@ endif
 
 $(FT_PRINTF):
 ifeq ($(shell mkdir -p libs && cd libs && ls | grep printf), printf)
-	$(info $(green)Printf founded!$(reset))
-else
-	$(info $(blue)Cloning Printf to libs folder.$(reset))
 	$(info $(blue)Compiling printf.$(reset))
 	@$(MAKE) -s -k -C $(FT_PRINTF_PATH)
 	$(info $(green)Printf installed!$(reset))
 endif
 	$(info $(yellow)Compiling fdf.$(reset))
 
+valgrind:
+	valgrind --track-origins=yes --error-exitcode=42 --leak-check=full --show-leak-kinds=all --quiet ./$(NAME) /maps/42.fdf
 clean:
 	@rm -dfr ./objs
 	@$(MAKE) -C $(FT_PRINTF_PATH) --silent clean

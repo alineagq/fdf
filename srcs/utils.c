@@ -6,7 +6,7 @@
 /*   By: aqueiroz < aqueiroz@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 10:31:45 by aqueiroz          #+#    #+#             */
-/*   Updated: 2023/01/25 10:34:05 by aqueiroz         ###   ########.fr       */
+/*   Updated: 2023/01/25 11:24:55 by aqueiroz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 void	raise_error(char *msg)
 {
 	ft_printf("%s", msg);
-	exit(0);
+	exit(1);
 }
