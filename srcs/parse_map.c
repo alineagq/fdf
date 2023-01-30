@@ -6,7 +6,7 @@
 /*   By: aqueiroz < aqueiroz@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 21:05:10 by aqueiroz          #+#    #+#             */
-/*   Updated: 2023/01/25 12:22:56 by aqueiroz         ###   ########.fr       */
+/*   Updated: 2023/01/29 22:26:56 by aqueiroz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	parsing_map(char *file)
 		ft_printf("%s", get_next_line(fd));
 		index++;
 	}
-
 	close(fd);
 	return (0);
 }
