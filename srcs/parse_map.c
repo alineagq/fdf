@@ -6,7 +6,7 @@
 /*   By: aqueiroz < aqueiroz@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 21:05:10 by aqueiroz          #+#    #+#             */
-/*   Updated: 2023/01/29 22:26:56 by aqueiroz         ###   ########.fr       */
+/*   Updated: 2023/01/30 21:49:51 by aqueiroz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,12 @@
 
 int	parsing_map(char *file)
 {
-	size_t	running_line;
-	size_t	index;
-	int		fd;
+	size_t	y;
+	size_t	x;
 
-	index = 1;
-	running_line = count_map_lines(file);
-	fd = open(file, O_RDONLY);
-	while (index <= running_line)
-	{
-		ft_printf("%s", get_next_line(fd));
-		index++;
-	}
-	close(fd);
+	y = count_map_lines(file);
+	x = get_value_x(file);
+	ft_printf("x: %i y: %i\n", x, y);
 	return (0);
 }
 
@@ -48,4 +41,18 @@ int	count_map_lines(char *file)
 	}
 	return (len);
 	close(fd);
+}
+
+int	get_value_x(char *file)
+{
+	int		fd;
+	char	*recebe;
+	int		x;
+
+	fd = open(file, O_RDONLY);
+	recebe = get_next_line(fd);
+	x = ft_size(recebe, ' ');
+	free(recebe);
+	close(fd);
+	return (x);
 }

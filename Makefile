@@ -6,7 +6,7 @@
 #    By: aqueiroz < aqueiroz@student.42sp.org.br    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 19:39:40 by aqueiroz          #+#    #+#              #
-#    Updated: 2023/01/25 11:37:27 by aqueiroz         ###   ########.fr        #
+#    Updated: 2023/01/30 21:54:03 by aqueiroz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ endif
 	$(info $(yellow)Compiling fdf.$(reset))
 
 valgrind:
-	valgrind --track-origins=yes --error-exitcode=42 --leak-check=full --show-leak-kinds=all --quiet ./$(NAME) /maps/42.fdf
+	valgrind --track-origins=yes --error-exitcode=42 --leak-check=full --show-leak-kinds=all --quiet ./$(NAME) maps/42.fdf
 clean:
 	@rm -dfr ./objs
 	@$(MAKE) -C $(FT_PRINTF_PATH) --silent clean
@@ -93,8 +93,8 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@$(MAKE) -C $(FT_PRINTF_PATH) --silent clean
-	@$(MAKE) -C $(LIBFT_PATH) --silent clean
+	@$(MAKE) -C $(FT_PRINTF_PATH) --silent fclean
+	@$(MAKE) -C $(LIBFT_PATH) --silent fclean
 	$(info $(yellow)Fdf file was removed.$(reset))
 
 re: fclean all
