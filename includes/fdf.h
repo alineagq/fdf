@@ -6,7 +6,7 @@
 /*   By: aqueiroz < aqueiroz@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 03:44:25 by aqueiroz          #+#    #+#             */
-/*   Updated: 2023/02/21 23:41:17 by aqueiroz         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:50:37 by aqueiroz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 # define FDF_H
 # include <X11/X.h>
 # include <X11/keysym.h>
-# include "../libs/printf/includes/ft_printf.h"
 # include "../libs/libft/libft.h"
+# include "../libs/printf/includes/ft_printf.h"
 # include <errno.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
+# include <stdio.h>
 
 typedef struct s_point
 {
@@ -35,6 +36,9 @@ int		get_value_y(char *file);
 int		get_value_x(char *file);
 void	raise_error(char *msg, int err);
 int		ft_size(char *s, char c);
-void	parsing_map(char *file, t_point **map);
+void	parsing_map(char *file, t_point ***map);
+int		ft_open(char *file);
+char	*ft_strtok(char *str, const char *c);
+void	print_map(t_point ***map, int rows, int cols);
 
 #endif
