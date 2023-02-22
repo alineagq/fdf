@@ -6,54 +6,52 @@
 /*   By: aqueiroz < aqueiroz@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 21:05:10 by aqueiroz          #+#    #+#             */
-/*   Updated: 2023/02/02 20:21:29 by aqueiroz         ###   ########.fr       */
+/*   Updated: 2023/02/21 23:46:24 by aqueiroz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	parsing_map(char *file)
+void parsing_map(char *file, t_point **map)
 {
-	size_t	y;
-	size_t	x;
 
-	y = count_map_lines(file);
-	x = get_value_x(file);
-	ft_printf("x: %i y: %i\n", x, y);
-	return (0);
 }
 
-int	count_map_lines(char *file)
+int	get_value_y(char *file)
 {
-	size_t	len;
 	int		fd;
-	char	*str;
+	int		count;
+	char	buf;
+	size_t	n;
 
-	len = 0;
+	count = 0;
 	fd = open(file, O_RDONLY);
-	str = malloc(1);
-	while (read(fd, str, 1))
+	if (fd == -1)
+		raise_error("Program couldn't open the file", EBADF);
+
+	n = read(fd, &buf, 1);
+	if (n == -1)
+		raise_error("Program couldn't read the file", EBADF);
+	while (n > 0)
 	{
-		if (*str == '\n')
-			len++;
-		if (!*str)
-			break ;
+		if (buf == '\n')
+			count++;
+		n = read(fd, &buf, 1);
 	}
-	free(str);
-	return (len);
 	close(fd);
+	return (count);
 }
 
 int	get_value_x(char *file)
 {
 	int		fd;
-	char	*recebe;
+	char	*line;
 	int		x;
 
 	fd = open(file, O_RDONLY);
-	recebe = get_next_line(fd);
-	x = ft_size(recebe, ' ');
-	free(recebe);
+	line = get_next_line(fd);
+	x = ft_size(line, ' ');
+	free(line);
 	close(fd);
 	return (x);
 }
