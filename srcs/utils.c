@@ -6,7 +6,7 @@
 /*   By: aqueiroz < aqueiroz@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 10:31:45 by aqueiroz          #+#    #+#             */
-/*   Updated: 2023/02/22 14:50:15 by aqueiroz         ###   ########.fr       */
+/*   Updated: 2023/02/22 22:21:42 by aqueiroz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,30 +53,29 @@ int	ft_size(char *s, char c)
 
 char	*ft_strtok(char *str, const char *c)
 {
-	static char	*buf;
-	char		*token;
+	static char	*last_token = NULL;
 	char		*result;
 
-	if (!str)
+	if (str)
+		last_token = str;
+	if (!last_token || !*last_token)
 		return (NULL);
-	buf = malloc (ft_strlen(str) + 1);
-	if (buf == NULL)
-		return (NULL);
-	ft_strlcpy(buf, str, ft_strlen(str));
-	while (*buf != '\0' && ft_strchr(c, *buf) != NULL)
-		buf++;
-	if (*buf == '\0')
+	while (*last_token && ft_strchr(c, *last_token))
+		last_token++;
+	if (!*last_token)
 	{
-		free(buf);
-		buf = NULL;
+		last_token = NULL;
 		return (NULL);
 	}
-	token = buf;
-	while (*token != '\0' && ft_strchr(c, *token) == NULL)
-		token++;
-	*token = '\0';
-	result = buf;
-	buf = token + 1;
+	result = last_token;
+	while (*last_token && !ft_strchr(c, *last_token))
+		last_token++;
+	if (*last_token)
+	{
+		*last_token = '\0';
+		last_token++;
+	}
+	else
+		last_token = NULL;
 	return (result);
 }
-

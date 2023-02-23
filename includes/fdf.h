@@ -6,7 +6,7 @@
 /*   By: aqueiroz < aqueiroz@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 03:44:25 by aqueiroz          #+#    #+#             */
-/*   Updated: 2023/02/22 16:50:37 by aqueiroz         ###   ########.fr       */
+/*   Updated: 2023/02/22 20:02:50 by aqueiroz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ int		get_value_y(char *file);
 int		get_value_x(char *file);
 void	raise_error(char *msg, int err);
 int		ft_size(char *s, char c);
-void	parsing_map(char *file, t_point ***map);
+t_point **parsing_map(char *file, int rows, int cols);
 int		ft_open(char *file);
 char	*ft_strtok(char *str, const char *c);
-void	print_map(t_point ***map, int rows, int cols);
+void print_map(t_point **map, int rows, int cols);
+void free_map(t_point **map, int rows);
 
 #endif
