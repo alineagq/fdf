@@ -6,7 +6,7 @@
 #    By: aqueiroz < aqueiroz@student.42sp.org.br    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 19:39:40 by aqueiroz          #+#    #+#              #
-#    Updated: 2023/01/30 21:54:03 by aqueiroz         ###   ########.fr        #
+#    Updated: 2023/02/22 23:32:40 by aqueiroz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,20 +53,20 @@ OBJS = $(addsuffix .o, $(FILES))
 # FLAGS
 
 CC = cc
-CFLAGS = 
-LIBFLAGS = -L./$(LIBFT_PATH) -L./$(FT_PRINTF_PATH) -lft -lftprintf -lXext -lX11 -lmlx -lm
+CFLAGS += `pkg-config --cflags x11 xext`
+LIBFLAGS = -L./$(LIBFT_PATH) -L./$(FT_PRINTF_PATH) -lft -lftprintf -lmlx -lXext -lX11 -lm
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(FT_PRINTF) $(OBJ_PATH) $(OBJS)
-	@$(CC) -g3 $(addprefix $(OBJ_PATH)/,$(OBJS)) $(LIBFLAGS) -o $@
+	@$(CC) -g3 $(addprefix $(OBJ_PATH)/,$(OBJS)) -o $@ $(LIBFLAGS)
 	$(info $(purple)All installed. Run './fdf' with a map as argument.$(reset))
 
 $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)
 
 %.o: $(SRC_PATH)/%.c
-	@$(CC) $(CFLAGS) -c -I $(PATH_INC) -o $(OBJ_PATH)/$@ $<
+	@$(CC) $(CFLAGS) -c -I $(PATH_INC) -o $(OBJ_PATH)/$@ $< $(LIBFLAGS)
 	
 $(LIBFT):
 ifeq ($(shell mkdir -p libs && cd libs && ls | grep libft), libft)

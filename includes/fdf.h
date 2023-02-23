@@ -6,7 +6,7 @@
 /*   By: aqueiroz < aqueiroz@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 03:44:25 by aqueiroz          #+#    #+#             */
-/*   Updated: 2023/02/22 20:02:50 by aqueiroz         ###   ########.fr       */
+/*   Updated: 2023/02/22 23:32:50 by aqueiroz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdio.h>
+# include <mlx.h>
+// # include <key_linux.h>
+
+# define WIDTH 800
+# define HEIGHT 800
 
 typedef struct s_point
 {
